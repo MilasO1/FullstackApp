@@ -1,6 +1,6 @@
-import sequelize from "sequelize";
+import Sequelize from "sequelize";
 
-const Op = new sequelize(
+const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
     process.env.DB_PASSWORD,
@@ -11,4 +11,4 @@ const Op = new sequelize(
     }
 );
 
-export default Op;
+export default sequelize;

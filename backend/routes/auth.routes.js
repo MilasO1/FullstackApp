@@ -5,6 +5,7 @@ import UserMONGO from "../models/UserMongo.js";
 import UserSQL from "../models/UserSql.js";
 import Joi from "joi";
 import { where } from "sequelize";
+import { sendWelcomeEmail } from "../utils/emailService.js";
 
 const router = express.Router();
 
@@ -39,6 +40,13 @@ router.post("/register", async (req, res) => {
             ? UserMONGO.create({ name, email, password: hashedPassword })
             : UserSQL.create({ name, email, password: hashedPassword })
         );
+
+        try {
+            await sendWelcomeEmail(email, name);
+        } catch (emailError) {
+            console.error('Welcome email failed:', emailError);
+            
+        }
 
         res.status(201).json({ message: "User registered successfully" });
     } catch (error) {

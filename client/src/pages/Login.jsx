@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
+  const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -13,6 +15,9 @@ const Login = () => {
         try {
           const response = await axios.post('http://localhost:5000/api/auth/login', formData);
           console.log('Login successful:', response.data);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
         } catch (error) {
           console.error('Login failed:', {
             message: error.message,
